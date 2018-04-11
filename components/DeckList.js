@@ -9,10 +9,10 @@ import { white } from '../utils/colors';
 class DeckList extends Component {
 
   componentDidMount () {
-    const { dispatch } = this.props
+    const { dispatch } = this.props;
 
     fetchDeckResults()
-    .then((decks) => dispatch(receiveDecks(decks)))
+    .then((decks) => dispatch(receiveDecks(decks)));
   }
 
   renderItem = ({ item }) => (
@@ -30,31 +30,24 @@ class DeckList extends Component {
           data={ Object.values(this.props.decks) }
           renderItem={ this.renderItem }
           keyExtractor={ (item, index) => index }/>
-          {/*
-            <Text>
-            //JSON.stringify(this.props.decks)
-            JSON.stringify(this.props.decks['JavaScript'])
-            //JSON.stringify(AsyncStorage.getItem(DECKS_STORAGE_KEY))
-          </Text>
-          */}
-      </View>
-    );
+        </View>
+      );
+    }
   }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: white
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: white
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center'
+    }
+  })
+
+  function mapStateToProps (decks) {
+    return { decks }
   }
-})
 
-function mapStateToProps (decks) {
-  return { decks }
-}
-
-export default connect(mapStateToProps)(DeckList);
+  export default connect(mapStateToProps)(DeckList);

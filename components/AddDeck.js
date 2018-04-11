@@ -14,7 +14,7 @@ class AddDeck extends Component {
   }
 
   toHome = () => {
-    this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeck'}))
+    this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeck'}));
   }
 
   nameNormalizer = (deckName) => {
@@ -72,49 +72,33 @@ class AddDeck extends Component {
       padding: 20,
       backgroundColor: white
     },
-    /*
-    row: {
-    flexDirection: 'row',
-    flex: 1,
-    alignItems: 'center'
-  },
-  */
-  iosSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    borderRadius: 7,
-    height: 45,
-    marginLeft: 40,
-    marginRight: 40
-  },
-  AndroidSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
-  },
-  /*
-  center: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginLeft: 30,
-  marginRight: 30
-},
-*/
-});
+    iosSubmitBtn: {
+      backgroundColor: purple,
+      padding: 10,
+      borderRadius: 7,
+      height: 45,
+      marginLeft: 40,
+      marginRight: 40
+    },
+    AndroidSubmitBtn: {
+      backgroundColor: purple,
+      padding: 10,
+      paddingLeft: 30,
+      paddingRight: 30,
+      height: 45,
+      borderRadius: 2,
+      alignSelf: 'center',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    submitBtnText: {
+      color: white,
+      fontSize: 22,
+      textAlign: 'center'
+    }
+  });
 
-function mapStateToProps (decks) {
-  return { decks }
-}
-export default connect(mapStateToProps)(AddDeck);
+  function mapStateToProps (decks) {
+    return { decks }
+  }
+  export default connect(mapStateToProps)(AddDeck);
