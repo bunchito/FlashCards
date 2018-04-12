@@ -5,14 +5,20 @@ import { receiveDecks } from '../actions';
 import { fetchDeckResults } from '../utils/api';
 import Deck from './Deck';
 import { white } from '../utils/colors';
+import { AppLoading } from 'expo';
 
 class DeckList extends Component {
+
+  state = {
+    ready: false
+  }
 
   componentDidMount () {
     const { dispatch } = this.props;
 
     fetchDeckResults()
-    .then((decks) => dispatch(receiveDecks(decks)));
+    .then((decks) => dispatch(receiveDecks(decks)))
+    .then(() => this.setState(() => ({ ready: true })));
   }
 
   renderItem = ({ item }) => (

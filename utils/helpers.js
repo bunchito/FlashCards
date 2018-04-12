@@ -12,7 +12,6 @@ export function SubmitBtn ({ onPress, onLabel, onParentStyles, onChildStyles }) 
   )
 }
 
-
 export function TextButton ({ children, onPress, style = {} }) {
   return (
     <TouchableOpacity onPress={ onPress }>
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
   submitBtnText: {
     color: white,
     fontSize: 22,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   center: {
     flex: 1,
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     marginRight: 30
   },
   textButton: {
-  textAlign: 'center',
-  color: purple,
-}
+    textAlign: 'center',
+    color: purple
+  }
 });

@@ -15,9 +15,7 @@ class DeckDetails extends Component {
   }
 
   render() {
-
     const { title, decks } = this.props;
-
     return (
       <View style={ styles.container }>
         <View style={{ flex: 3 }}>

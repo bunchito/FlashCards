@@ -2,19 +2,19 @@
   "expo": {
     "sdkVersion": "26.0.0",
     "orientation": "portrait",
-    "name": "Testing 1",
-    "description": "Testing 1",
-    "slug": "testing1",
-    "version": "1.1",
-    "icon": "https://maxcdn.icons8.com/Color/PNG/512/Sports/triathlon-512.png",
+    "name": "FlashCards",
+    "description": "FlashCards...",
+    "slug": "flashcards",
+    "version": "2.2",
+    "icon": "./assets/img/cubeOutline-512.png",
     "notification": {
-      "icon": "http://www.student-scholarships.com/images/made/img/featured/nav_basketball_45_45.png"
+      "icon": "./assets/img/cubeOutline-32.png"
     },
     "ios": {
-     "bundleIdentifier": "org.testing1cards.exp",
+     "bundleIdentifier": "org.flashcardsTest.exp",
     },
     "android": {
-     "package": "org.testing1cards.exp",
+     "package": "org.flashcardsTest.exp",
     }
   },
 }

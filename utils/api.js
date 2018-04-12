@@ -3,7 +3,7 @@ import { formatDeskResults, DECKS_STORAGE_KEY } from './_deck';
 
 export function fetchDeckResults () {
 
-  //AsyncStorage.clear(DECKS_STORAGE_KEY); //clear all my tests
+  //AsyncStorage.clear(DECKS_STORAGE_KEY);
 
   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
   .then(formatDeskResults)

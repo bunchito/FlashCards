@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { SubmitBtn, TextButton } from '../utils/helpers';
 import { clearLocalNotification, setLocalNotification } from '../utils/notifications';
+import { NavigationActions } from 'react-navigation';
 import { green, red, white } from '../utils/colors';
 import PercentageCircle from 'react-native-percentage-circle';
 
@@ -43,6 +44,14 @@ class Quiz extends Component {
     }
   }
 
+  setColorForCP = (result) => {
+    if (result > 50) {
+      return green;
+    } else {
+      return red;
+    }
+  }
+
   changeFace = (face) => {
     this.setState({ face });
   }
@@ -68,23 +77,61 @@ class Quiz extends Component {
     });
   }
 
+  restartQuiz = () => {
+    this.setState({
+      counter: 0,
+      face: 'question',
+      correct: 0,
+      incorrect: 0,
+      enable: false
+    });
+  }
+
+  goBack = () => {
+    this.props.navigation.dispatch(NavigationActions.back())
+  }
+
+  goHome = () => {
+    const homeScreen = NavigationActions.navigate({
+      routeName: 'Home',
+      params: {}
+    })
+    this.props.navigation.dispatch(homeScreen)
+  }
+
   render() {
 
     const { counter, face, correct, incorrect, enable } = this.state;
     const { deck, decks } = this.props;
 
+    const percentageIs = this.calculatePercentage();
+    const percentageColor = this.setColorForCP(percentageIs);
+
     return (
       <View style={ styles.container }>
-
         {enable === true ? (
           <View style={{ flex: 1 }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <PercentageCircle radius={ 70 } percent={ this.calculatePercentage() } color={ green } borderWidth={ 4 }
-                textStyle={{ fontSize: 24 }}></PercentageCircle>
-                <Text>{this.evaluateResult(this.calculatePercentage())}</Text>
-                <Text>Counter: { counter }</Text>
+              { percentageIs >= 30 ? (
+                <PercentageCircle radius={ 70 } percent={ percentageIs }
+                  color={ percentageColor } borderWidth={ 4 }
+                  textStyle={{ fontSize: 44, color: percentageColor }}></PercentageCircle>
+                ) : (
+                  <Text style={{ fontSize: 44, color: percentageColor }}>{ `${percentageIs}%` }</Text>
+                )}
+                <Text style={{ fontSize: 24, color: percentageColor }}>{ this.evaluateResult(percentageIs) }</Text>
+                <Text style={{ marginTop: 10 }}>Counter: { counter }</Text>
                 <Text>Correct: { correct }</Text>
                 <Text>Incorrect: { incorrect }</Text>
+                <TextButton style={{ padding: 10 }} onPress={ () => this.restartQuiz() }>
+                  Restart Quiz
+                </TextButton>
+                <TextButton onPress={ () => this.goBack() }>
+                  Back to Deck
+                </TextButton>
+                <TextButton style={{ padding: 10 }} onPress={ () => this.goHome() }>
+                  Try other Deck
+                </TextButton>
               </View>
             </View>
           ) : (
@@ -93,23 +140,20 @@ class Quiz extends Component {
                 <View>
                   <Text style={{ padding: 10 }}> { `${counter + 1} / ${decks[deck].questions.length}` }</Text>
                 </View>
-
                 {face === 'question' ? (
                   <View>
-                    <Text style={{ fontSize: 35, textAlign: 'center', marginBottom: 10 }}>
+                    <Text style={{ fontSize: 35, textAlign: 'center', marginBottom: 10, paddingLeft: 10, paddingRight: 10 }}>
                       { decks[deck].questions[counter].question }
                     </Text>
-
                     <TextButton onPress={ () => this.changeFace('answer') }>
                       Answer
                     </TextButton>
                   </View>
                 ) : (
                   <View>
-                    <Text style={{ fontSize: 35, textAlign: 'center', marginBottom: 10 }}>
+                    <Text style={{ fontSize: 35, textAlign: 'center', marginBottom: 10, paddingLeft: 10, paddingRight: 10 }}>
                       { decks[deck].questions[counter].answer }
                     </Text>
-
                     <TextButton onPress={ () => this.changeFace('question') }>
                       Question
                     </TextButton>
@@ -124,7 +168,6 @@ class Quiz extends Component {
                   </View>
                 </View>
               )}
-
             </View>
           );
         }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Platform, TextInput, Alert } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Platform, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { white, purple, gray } from '../utils/colors';
 import { addDeck } from '../actions';
@@ -11,10 +11,6 @@ class AddDeck extends Component {
 
   state = {
     text: ''
-  }
-
-  toHome = () => {
-    this.props.navigation.dispatch(NavigationActions.back({key: 'AddDeck'}));
   }
 
   nameNormalizer = (deckName) => {
@@ -31,8 +27,8 @@ class AddDeck extends Component {
       Alert.alert('Wrong Deck Name', 'Please, select other title for your new Deck. It looks like we have that Deck', [
         { text: 'I will try my best!' }
       ]);
-    } else if (this.state.text.length < 3) {
-      Alert.alert('Wrong Deck Name','Your new Deck title length should be greater than 3 chars', [
+    } else if (this.state.text.length < 3 || this.state.text.length > 25) {
+      Alert.alert('Wrong Deck Name','Your new Deck name length should be greater than 3 chars and less than 25', [
         { text: 'I will try my best!' }
       ]);
     } else {
@@ -46,22 +42,22 @@ class AddDeck extends Component {
       addDeckLocal(formattedDeck);
       this.props.dispatch(addDeck(formattedDeck));
 
-      this.toHome();
+      this.props.navigation.navigate('DeckDetails', { title: this.state.text });
     }
   }
 
   render() {
     return (
-      <View style={ styles.container }>
+      <KeyboardAvoidingView behavior="padding" style={ styles.container }>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text style={{ fontSize: 35, textAlign: 'center', marginBottom: 30 }}>What is the title of your new deck?</Text>
-          <TextInput
+          <Text style={{ fontSize: 35, textAlign: 'center', marginBottom: 30, paddingLeft: 10, paddingRight: 10 }}>What is the title of your new deck?</Text>
+          <TextInput underlineColorAndroid='transparent'
             style={{ height: 40, borderColor: gray, borderWidth: 1, padding: 5, marginBottom: 40 }}
             onChangeText={ (text) => this.setState({ text }) }
             value={ this.state.text } placeholder='Deck Title'/>
-            <SubmitBtn onPress={ this.submit } onLabel='Submit' />
+            <SubmitBtn onPress={ this.submit } onLabel='Add Deck' />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       );
     }
   }

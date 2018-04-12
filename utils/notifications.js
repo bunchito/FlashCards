@@ -1,15 +1,9 @@
+// Credits: UdaciFitness
+
 import { AsyncStorage } from 'react-native';
 import { Notifications, Permissions } from 'expo';
 
 const NOTIFICATION_KEY = 'UdaciCards:notifications';
-
-/*
-export function getDailyReminderValue () {
-return {
-today: "👋 Don't forget to log your data today!"
-}
-}
-*/
 
 export function clearLocalNotification () {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
@@ -49,9 +43,9 @@ export function setLocalNotification () {
           Notifications.cancelAllScheduledNotificationsAsync()
 
           let tomorrow = new Date()
-          tomorrow.setDate(tomorrow.getDate())
-          tomorrow.setHours(3)
-          tomorrow.setMinutes(42)
+          tomorrow.setDate(tomorrow.getDate() + 1)
+          tomorrow.setHours(9)
+          tomorrow.setMinutes(0)
 
           console.log('tomorrow', tomorrow)
 

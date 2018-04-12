@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-class Deck extends Component {
+export default function Deck ({ onQuestions, onTitle, onBorder }) {
 
   questionsRender = () => {
-    const totalQuestions = this.props.onQuestions.length;
 
-    // To avoid issue with Decks with 0 cards
+    const totalQuestions = onQuestions.length;
+
     if (totalQuestions !== null && totalQuestions !== '') {
       if (totalQuestions === 1) {
         return <Text>{ totalQuestions } card</Text>
@@ -16,19 +16,14 @@ class Deck extends Component {
     }
   }
 
-  render() {
-
-    const { onTitle, onBorder } = this.props;
-
-    return (
-      <View style={ styles.container }>
-        <View style={ [styles.column, styles.parent, { borderBottomWidth: onBorder }] }>
-          <Text style={ [styles.column], { fontSize: 35 } }>{ onTitle }</Text>
-          <Text style={ styles.column }>{ this.questionsRender() }</Text>
-        </View>
+  return (
+    <View style={ styles.container }>
+      <View style={ [styles.column, styles.parent, { borderBottomWidth: onBorder }] }>
+        <Text style={ [styles.column], { fontSize: 35, paddingLeft: 10, paddingRight: 10 } }>{ onTitle }</Text>
+        <Text style={ styles.column }>{ this.questionsRender() }</Text>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -44,5 +39,3 @@ const styles = StyleSheet.create({
     padding: 20
   }
 });
-
-export default Deck;

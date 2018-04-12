@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Platform, TextInput } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Platform, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { white, purple, gray } from '../utils/colors';
@@ -26,10 +26,14 @@ class AddCard extends Component {
   }
 
   submit = () => {
-    if (this.state.question.length < 3) {
-      alert('Your new Deck title length should be greater than 3 chars');
-    } else if (this.state.answer.length < 3) {
-      alert('Your new Deck title length should be greater than 3 chars');
+    if (this.state.question.length < 3 || this.state.question.length > 45) {
+      Alert.alert('Wrong question value', 'The question length should be greater than 3 chars and less than 45', [
+        { text: 'I will try my best!' }
+      ]);
+    } else if (this.state.answer.length < 3 || this.state.answer.length > 150) {
+      Alert.alert('Wrong answer value', 'The answer length should be greater than 3 chars and less than 150', [
+        { text: 'I will try my best!' }
+      ]);
     } else {
 
       const formattedCard = {
@@ -49,20 +53,20 @@ class AddCard extends Component {
 
   render() {
     return (
-      <View style={ styles.container }>
+      <KeyboardAvoidingView behavior="padding" style={ styles.container }>
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <Text style={{ fontSize: 35, textAlign: 'center', marginBottom: 30 }}>Great! You want to add a Card!</Text>
-          <TextInput
+          <Text style={{ fontSize: 35, textAlign: 'center', marginBottom: 30, paddingLeft: 10, paddingRight: 10 }}>Great! You want to add a Card!</Text>
+          <TextInput underlineColorAndroid='transparent'
             style={ styles.inputText }
             onChangeText={ (question) => this.setState({ question }) }
             value={ this.state.question } placeholder='Type here your question...'/>
-            <TextInput
+            <TextInput underlineColorAndroid='transparent'
               style={ styles.inputText }
               onChangeText={ (answer) => this.setState({ answer }) }
               value={ this.state.answer } placeholder='Type here your answer...'/>
-              <SubmitBtn onPress={ this.submit } onLabel='Submit' onParentStyles={{ backgroundColor: purple }} />
+              <SubmitBtn onPress={ this.submit } onLabel='Add Card' onParentStyles={{ backgroundColor: purple }} />
             </View>
-          </View>
+          </KeyboardAvoidingView>
         );
       }
     }
